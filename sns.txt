@@ -1,0 +1,20 @@
+import boto3
+from datetime import datetime,date
+from datetime import timedelta
+
+def lambda_handler(event, context):
+    Begindatestring = "2021-10-24"
+    
+    Begindate = datetime.strptime(Begindatestring, "%Y-%m-%d")
+    Enddate = Begindate #+ timedelta(days=20)
+    today = date.today()
+    today = "2021-10-24"
+    today = datetime.strptime(today, "%Y-%m-%d")
+
+    if(Enddate==today):
+        client = boto3.client('sns')
+        response = client.publish(
+            TopicArn = 'arn:aws:sns:ap-south-1:499607506705:mojeflixDatetime',
+            Message = 'Your Free Subscription Ends in 10 Days',
+            Subject = 'Mojeflix Subscription End'
+            )

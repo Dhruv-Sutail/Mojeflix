@@ -1,0 +1,126 @@
+{% load static %}
+
+{% block title %}
+    <title>{{user}}'s Profile | Mojeflix</title>
+{% endblock %}
+
+
+{% block css_files %}
+    <link rel="stylesheet" href="{% static 'Homepage/styleindex.css' %}" />
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+{% endblock %}
+
+{% block content %}
+    <div class="header">
+      <div class="header__icons">
+        <div class="header__icon active">
+          <span class="material-icons"> home </span>
+          <p><b>Home</b></p>
+        </div>
+
+        <div class="header__icon">
+          <span class="material-icons"> flash_on </span>
+          <p>Trending</p>
+        </div>
+
+        <div class="header__icon">
+          <span class="material-icons"> live_tv </span>
+          <p>TV Shows</p>
+        </div>
+
+        <div class="header__icon">
+          <span class="material-icons"> video_library </span>
+          <p>Collections</p>
+        </div>
+
+        <div class="header__icon">
+          <span class="material-icons"> search </span>
+          <p>Search</p>
+        </div>
+
+        <form method="POST" action="{% url 'logout' %}">
+          {% csrf_token %}
+          <div class="header__icon">
+          <span class="material-icons"> person_outline </span>
+          <button>{{user}}</button>
+        </div>
+        </form>
+      </div>
+      <img src="{% static 'Images/mojeflix.png' %}" alt="Mojeflix" />
+    </div>
+    <!-- header ends -->
+
+    <!-- movies starts -->
+
+    {% for content in content %}
+    <div class="nav">
+      <h2>{{content.genre}}</h2>
+    </div>
+    <a href="{% url 'videoplayer' content.slug %}">
+      <div class="movies"> 
+          <div class="movie">
+              <img src="{{content.image.url}}" alt="{{content.title}}"/>
+              <p>{{content.description}}</p>
+              <h2>{{content.title}}</h2>
+          </div>          
+      </div>    
+    </a>
+    {% endfor %}
+
+    {% if content1 %}      
+        {% for content1 in content1 %}
+        <div class="nav">
+          <h2>{{content1.genre}}</h2>
+        </div>
+        <a href="{% url 'videoplayer' content1.slug %}">
+          <div class="movies"> 
+          <div class="movie">
+            <img src="{{content1.image.url}}" alt="{{content1.title}}"/>
+            <p>{{content1.description}}</p>
+            <h2>{{content1.title}}</h2>
+          </div>          
+        </div>
+        </a>
+      {% endfor %}    
+    {% endif %}
+
+    {% if content3 %}
+        {% for content3 in content3 %}
+        <div class="nav">
+          <h2>{{content3.genre}}</h2>
+        </div>
+
+        <a href="{% url 'videoplayer' content3.slug %}">
+          <div class="movies"> 
+          <div class="movie">
+            <img src="{{content3.image.url}}" alt="{{content3.title}}"/>
+            <p>{{content3.description}}</p>
+            <h2>{{content3.title}}</h2>
+          </div>          
+      </div>
+        </a>
+      {% endfor %}    
+    {% endif %}
+
+    {% if content4 %}
+        {% for content4 in content4 %}
+        <div class="nav">
+          <h2>{{content4.genre}}</h2>
+        </div>
+
+        <a href="{% url 'videoplayer' content4.slug %}">
+          <div class="movies"> 
+          <div class="movie">
+            <img src="{{content4.image.url}}" alt="{{content4.title}}"/>
+            <p>{{content4.description}}</p>
+            <h2>{{content4.title}}</h2>
+          </div>          
+      </div>       
+      </div>
+        </a>
+
+        
+      {% endfor %}    
+    {% endif %}
+
+{% endblock %}

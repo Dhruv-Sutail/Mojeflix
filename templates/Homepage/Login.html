@@ -1,0 +1,101 @@
+{% extends 'base.html' %}
+
+
+{% load static %}
+{% load socialaccount %}
+{% providers_media_js %}
+
+
+{% block css_files %}
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <style>
+      body {
+        overflow: hidden; 
+      }
+    </style>
+{% endblock %}
+
+
+
+{% block content %}
+<div class="body">
+<div class="container">
+    <input type="checkbox" id="flip">
+    <div class="cover">
+      <div class="front">
+        <img src="{% static 'Images/header.jpg' %}" alt="">
+        <div class="text">
+          <span class="text-1">Every Show is a <br> new Adventure</span>
+          <span class="text-2">Let's get Going</span><br>
+        </div>
+      </div>
+      <div class="back">
+        <img class="backImg" src="{% static 'Images/header.jpg' %}" alt="">
+        <div class="text">
+          <span class="text-1">Watch Tons of shows <br> with one step</span>
+          <span class="text-2">Let's get Entertainment</span>
+        </div>
+      </div>
+    </div>
+    <div class="forms">
+        <div class="form-content">
+          <div class="login-form">
+            <div class="title">Login</div>
+          <form action="{% url 'login' %}" method="POST">
+            {% csrf_token %}
+            <h3 class="text-danger">{{error}}</h3>
+            <h3 class="text-success">{{success}}</h3>
+            <div class="input-boxes">
+              <div class="input-box">
+                <i class="fas fa-envelope"></i>
+                <input type="text" name="user" placeholder="Enter your Username" required>
+              </div>
+              <div class="input-box">
+                <i class="fas fa-lock"></i>
+                <input type="password" name="password" placeholder="Enter your password" required>
+              </div>
+              <div class="text"><a href="#">Forgot password?</a></div>
+              <div class="button input-box">
+                <input type="submit" value="Sumbit">
+              </div>
+              <center>
+                <button class="loginBtn loginBtn--google mb-4 log">
+                  <a href="{% provider_login_url 'google' %}" class="gog">
+                    Login with Google
+                  </a>
+                </button>
+              </center>  
+              <div class="text sign-up-text">Don't have an account? <label for="flip">Sigup now</label></div>
+            </div>
+        </form>
+      </div>
+        <div class="signup-form">
+          <div class="title">Signup</div>
+        <form action="{% url 'register' %}" method="POST">
+          {% csrf_token %}
+            <div class="input-boxes">
+              <div class="input-box">
+                <i class="fas fa-user"></i>
+                <input type="text" name="user" placeholder="Enter your Username" required>
+              </div>
+              <div class="input-box">
+                <i class="fas fa-envelope"></i>
+                <input type="text" name="email" placeholder="Enter your email" required>
+              </div>
+              <div class="input-box">
+                <i class="fas fa-lock"></i>
+                <input type="password" name="password" placeholder="Enter your password" required>
+              </div>
+              <div class="button input-box">
+                <input type="submit" value="Sumbit">
+              </div>
+              <div class="text sign-up-text">Already have an account? <label for="flip">Login now</label></div>
+            </div>
+      </form>
+    </div>
+    </div>
+    </div>
+  </div>
+</div>
+
+{% endblock %}

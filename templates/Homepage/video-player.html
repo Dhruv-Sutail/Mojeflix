@@ -1,0 +1,110 @@
+{% load static %}
+
+{% block title %}
+    <title>{{user}}'s Profile | Mojeflix</title>
+{% endblock %}
+
+{% block css_files %}
+    <link rel="stylesheet" href="{% static 'Homepage/styleindex.css' %}"/>
+    <link rel="stylesheet" href="{% static 'Homepage/videoplayer.css' %}"/>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+{% endblock %}
+
+{% block content %}
+    <div class="header">
+      <div class="header__icons">
+        <div class="header__icon active">
+          <span class="material-icons"> home </span>
+          <p><b>Home</b></p>
+        </div>
+
+        <div class="header__icon">
+          <span class="material-icons"> flash_on </span>
+          <p>Trending</p>
+        </div>
+
+        <div class="header__icon">
+          <span class="material-icons"> live_tv </span>
+          <p>TV Shows</p>
+        </div>
+
+        <div class="header__icon">
+          <span class="material-icons"> video_library </span>
+          <p>Collections</p>
+        </div>
+
+        <div class="header__icon">
+          <span class="material-icons"> search </span>
+          <p>Search</p>
+        </div>
+
+        <form method="POST" action="{% url 'logout' %}">
+          {% csrf_token %}
+          <div class="header__icon">
+          <span class="material-icons"> person_outline </span>
+          <button>{{user}}</button>
+        </div>
+        </form>
+      </div>
+      <img src="{% static 'Images/mojeflix.png' %}" alt="Mojeflix" />
+    </div>
+    <!-- header ends -->
+
+    <div class="body">
+        {% for video in video %}
+            <div class="video-container">
+                <video controls>
+                    <source src="{{video.video.url}}" type="video/mp4"> 
+                </video>
+	        </div>
+        {% endfor %}
+        <section class="section">
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-5 col-md-6 col-12 pb-4">
+                    <h1 class="font">Comments</h1>
+                    <div class="text-justify darker mt-4 float-left">
+                        {% for comments in comments %}
+                          <h4 class="font">{{comments.username}}</h4><span class="ml-5">
+                          {% if comments.ratings == "1" %}
+                          ☆  
+                          {% endif %}
+                          {% if comments.ratings == "2" %}
+                          ☆☆  
+                          {% endif %}
+                          {% if comments.ratings == "3" %}
+                          ☆☆☆  
+                          {% endif %}
+                          {% if comments.ratings == "4" %}
+                          ☆☆☆☆  
+                          {% endif %}
+                          {% if comments.ratings == "5" %}
+                          ☆☆☆☆☆  
+                          {% endif %}
+                          </span><br>
+                            <span>- {{ comments.date|date:"M d, Y" }}</span> <br>
+                          <p>{{comments.comment}}</p>
+                        {% endfor %}
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-5 col-sm-4 offset-md-1 offset-sm-1 col-12 mt-4">
+                  {% for video in video %}
+                    <form method="POST" id="algin-form" action="{% url 'videoplayer' video.slug%}">
+                        {% csrf_token %}
+                        <div class="form-group">                    
+                            <h4 class="font">Leave a comment</h4> <label for="message">Comment</label> <textarea name="msg" id="" msg cols="30" rows="5" class="form-control" style="background-color: black;"></textarea>
+                            <div class="mt-2 rating"> <input type="radio" name="rating" value="5" id="5"><label for="5">☆</label> <input type="radio" name="rating" value="4" id="4"><label for="4">☆</label> <input type="radio" name="rating" value="3" id="3"><label for="3">☆</label> <input type="radio" name="rating" value="2" id="2"><label for="2">☆</label> <input type="radio" name="rating" value="1" id="1"><label for="1">☆</label></div>
+                            <input type="text" name="slug" value="{{video.slug}}" hidden>
+                        </div>
+                        <div class="form-group"><button type="submit" class="d-flex justify-content-center mt-5 post" class="btn">Post Comment</button> </div>
+                    </form>
+                  {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

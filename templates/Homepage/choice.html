@@ -1,0 +1,38 @@
+{% load static %}
+
+
+{% block title %}
+    <title>Choose Genre | Mojeflix</title>
+{% endblock %}
+
+
+{% block css_files %}
+    <link rel="stylesheet" href="{% static 'Homepage/choice.css' %}" />
+{% endblock %}
+
+{% block content %}
+
+<div class="img-background">
+	<div class="box">
+		<form action="{% url 'profile' %}" method="POST"><center>
+			{% csrf_token %}
+			<label for="genre"><h1>Please Select Your Genre</h1></label></center>
+				<div class="label1">
+				<input type="checkbox" id="genre1" name="genre" value="Action">
+				<label for="genre1"> Action</label><br>
+				{% comment %} <input type="checkbox" id="genre2" name="genre" value="Comedy">
+				<label for="genre2"> Comedy</label><br> {% endcomment %}
+				</div>
+				<div class="label2">
+				<input type="checkbox" id="genre3" name="genre" value="Comedy">
+				<label for="genre3"> Comedy</label><br>
+				{% comment %} <input type="checkbox" id="genre4" name="genre" value="Trending">
+				<label for="genre4"> Trending</label><br> {% endcomment %}
+				<input type="hidden" name="subs" value="1">
+				</div>
+				<input type="submit" value="Choose">
+		</form>
+	</div>
+</div>
+
+{% endblock %}
